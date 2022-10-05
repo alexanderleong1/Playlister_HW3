@@ -123,7 +123,6 @@ export const useGlobalStore = () => {
 
                 // OPEN THE NEW PLAYLIST IN EDIT MODE
                 store.setCurrentList(playlist._id);
-                console.log(playlist);
             }
         }
 

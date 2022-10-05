@@ -29,12 +29,14 @@ export const postNewPlaylist = () => api.post(`/playlist`,
         name: "Untitled Playlist",
         songs: []
     })
+export const clearDb = () => api.delete(`/clearplaylists`)
 
 const apis = {
     getAllPlaylists,
     getPlaylistPairs,
     getPlaylistById,
-    postNewPlaylist
+    postNewPlaylist,
+    clearDb
 }
 
 export default apis

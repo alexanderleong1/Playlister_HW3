@@ -6,6 +6,16 @@ const Playlist = require('../models/playlist-model')
     
     @author McKilla Gorilla
 */
+clearDb = async (req, res) => {
+    await Playlist.deleteMany({}, (err, list) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+
+        return res.status(200).json({ success: true, playlist: list })
+    }).catch(err => console.log(err));
+}
+
 createPlaylist = (req, res) => {
     const body = req.body;
     console.log("createPlaylist body: " + body);
@@ -91,5 +101,6 @@ module.exports = {
     createPlaylist,
     getPlaylists,
     getPlaylistPairs,
-    getPlaylistById
+    getPlaylistById,
+    clearDb
 }
