@@ -120,6 +120,9 @@ export const useGlobalStore = () => {
                     type: GlobalStoreActionType.CREATE_NEW_LIST,
                     payload: playlist
                 });
+
+                // OPEN THE NEW PLAYLIST IN EDIT MODE
+                store.setCurrentList(playlist._id);
                 console.log(playlist);
             }
         }
