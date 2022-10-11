@@ -86,10 +86,24 @@ getPlaylistPairs = async (req, res) => {
         }
     }).catch(err => console.log(err))
 }
+deletePlaylist = async (req, res) => {
+    console.log("deletePlaylist body: " + req.body);
+
+    await Playlist.deleteOne({ _id: req.params.id }, (err, _) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: "Could not delete playlist" })
+        }
+
+        console.log("playlist: " + JSON.stringify(req.body));
+        
+        return res.status(200).json({ success: true })
+    }).catch(err => console.log(err, req))
+}
 
 module.exports = {
     createPlaylist,
     getPlaylists,
     getPlaylistPairs,
-    getPlaylistById
+    getPlaylistById,
+    deletePlaylist
 }

@@ -16,6 +16,8 @@ function ListCard(props) {
     const { idNamePair, selected } = props;
 
     function handleLoadList(event) {
+        if (event.target.id.includes("delete-list") ||
+            event.target.id.includes("edit-list")) return;
         if (!event.target.disabled) {
             let _id = event.target.id;
             if (_id.indexOf('list-card-text-') >= 0)
@@ -49,6 +51,19 @@ function ListCard(props) {
     function handleUpdateText(event) {
         setText(event.target.value );
     }
+    // function handleDeleteList() {
+    //     store.deletePlaylist(props.idNamePair._id);
+    // }
+    function markList(playlistId) {
+        // MARK THE CURRENT LIST FOR DELETION IN THE GLOBAL STORE
+        store.markList(playlistId);
+
+        // AND THEN SHOW THE DELETE LIST MODAL
+        // showDeleteListModal();
+    }
+    // function showDeleteListModal() {
+    //     store.showDeleteListModal();
+    // }
 
     let selectClass = "unselected-list-card";
     if (selected) {
@@ -76,6 +91,7 @@ function ListCard(props) {
                 id={"delete-list-" + idNamePair._id}
                 className="list-card-button"
                 value={"\u2715"}
+                onClick={() => {markList(idNamePair._id)}}
             />
             <input
                 disabled={cardStatus}

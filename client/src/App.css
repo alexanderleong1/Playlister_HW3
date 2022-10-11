@@ -138,6 +138,7 @@ body {
 .list-card-button {
   float:right;
   font-size:18pt;
+  z-index:9999;
 }
 
 input {
@@ -218,6 +219,7 @@ input {
 .modal-control {
   cursor: pointer;
   width: 20%;
+  margin: 8px;
 }
 
 .dialog-header {
