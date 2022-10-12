@@ -235,8 +235,6 @@ export const useGlobalStore = () => {
                 type: GlobalStoreActionType.MOVE_SONG,
                 payload: newList
             });
-
-            console.log(store.currentList.songs);
         }
 
         asyncMoveSong(sourceIndex, targetIndex);
