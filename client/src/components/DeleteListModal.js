@@ -8,6 +8,13 @@ function DeleteListModal(props) {
         store.deletePlaylist();
     }
 
+    function findPlaylistName() {
+        return store.idNamePairs.filter(pair => pair._id == store.markedList);
+    }
+
+    let playlistName = findPlaylistName();
+    if (playlistName && playlistName[0]) playlistName = playlistName[0].name;
+
     return (
         <div
             className={"modal " + (store.deleteListModalIsActive ? "is-visible" : "")}
@@ -19,7 +26,7 @@ function DeleteListModal(props) {
                 </div>
                 <div className="dialog-header">
                     <p>
-                        Are you sure you wish to permanently delete the {} playlist?
+                        Are you sure you wish to permanently delete the {playlistName} playlist?
                     </p>
                 </div>
                 <div className="modal-footer" id="confirm-cancel-container">
