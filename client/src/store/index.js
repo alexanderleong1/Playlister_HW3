@@ -143,6 +143,17 @@ export const useGlobalStore = () => {
                     markedList: payload
                 });
             }
+            // UPDATE THE CURRENT LIST AFTER ADDING A NEW SONG
+            case GlobalStoreActionType.ADD_SONG: {
+                return setStore({
+                    idNamePairs: store.idNamePairs,
+                    currentList: payload,
+                    newListCounter: store.newListCounter,
+                    listNameActive: store.listNameActive,
+                    deleteListModalIsActive: store.deleteListModalIsActive,
+                    markedList: store.markedList
+                });
+            }
             default:
                 return store;
         }
@@ -150,6 +161,18 @@ export const useGlobalStore = () => {
     // THESE ARE THE FUNCTIONS THAT WILL UPDATE OUR STORE AND
     // DRIVE THE STATE OF THE APPLICATION. WE'LL CALL THESE IN 
     // RESPONSE TO EVENTS INSIDE OUR COMPONENTS.
+
+    store.addSong = function () {
+        async function asyncAddSong() {
+            let response = await api.putNewSong(store.currentList._id);
+
+            if (response.data.success) {
+                store.setCurrentList(store.currentList._id);
+            }
+        }
+
+        asyncAddSong();
+    }
 
     // THIS FUNCTION ADDS A NEW PLAYLIST
     store.createNewList = function () {

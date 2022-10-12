@@ -99,11 +99,35 @@ deletePlaylist = async (req, res) => {
         return res.status(200).json({ success: true })
     }).catch(err => console.log(err, req))
 }
+createSong = async (req, res) => {
+    const body = req.body;
+
+    const song = {
+        title: body.title,
+        artist: body.artist,
+        youTubeId: body.youTubeId
+    }
+
+    await Playlist.findOne({_id : req.params.id }, (err, list) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: "Could not create a new song" })
+        }
+
+        let newSongs = list.songs;
+        newSongs.push(song);
+
+        Playlist.updateOne({_id : req.params.id }, {songs: newSongs})
+            .catch(err => res.status(400).json({ success: false, err: err }));
+        
+        return res.status(200).json({success: true, msg: "Successfully added a new song"});
+    }).catch(err => res.status(400).json({ success: false, err: err }))
+}
 
 module.exports = {
     createPlaylist,
     getPlaylists,
     getPlaylistPairs,
     getPlaylistById,
-    deletePlaylist
+    deletePlaylist,
+    createSong
 }

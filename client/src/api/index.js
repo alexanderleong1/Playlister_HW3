@@ -30,13 +30,19 @@ export const postNewPlaylist = () => api.post(`/playlist`,
         songs: []
     })
 export const deletePlaylist = (id) => api.delete(`/deleteplaylist/${id}`)
-
+export const putNewSong = (id) => api.put(`/song/${id}`, 
+    {
+        title: "Untitled",
+        artist: "Unknown",
+        youTubeId: "dQw4w9WgXcQ"
+    })
 const apis = {
     getAllPlaylists,
     getPlaylistPairs,
     getPlaylistById,
     postNewPlaylist,
-    deletePlaylist
+    deletePlaylist,
+    putNewSong
 }
 
 export default apis
