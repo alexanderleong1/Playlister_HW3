@@ -36,13 +36,18 @@ export const putNewSong = (id) => api.put(`/song/${id}`,
         artist: "Unknown",
         youTubeId: "dQw4w9WgXcQ"
     })
+export const putListOrder = (id, newList) => api.put(`/updatelistorder/${id}`,
+    {
+        newList: newList
+    })
 const apis = {
     getAllPlaylists,
     getPlaylistPairs,
     getPlaylistById,
     postNewPlaylist,
     deletePlaylist,
-    putNewSong
+    putNewSong,
+    putListOrder
 }
 
 export default apis

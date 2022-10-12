@@ -20,7 +20,9 @@ export const GlobalStoreActionType = {
     SET_LIST_NAME_EDIT_ACTIVE: "SET_LIST_NAME_EDIT_ACTIVE",
     DELETE_CURRENT_LIST: "DELETE_CURRENT_LIST",
     MARK_LIST: "MARK_LIST",
-    SHOW_DELETE_LIST_MODAL: "SHOW_DELETE_LIST_MODAL"
+    SHOW_DELETE_LIST_MODAL: "SHOW_DELETE_LIST_MODAL",
+    ADD_SONG: "ADD_SONG",
+    MOVE_SONG: "MOVE_SONG"
 }
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -154,6 +156,17 @@ export const useGlobalStore = () => {
                     markedList: store.markedList
                 });
             }
+            // UPDATE THE CURRENT LIST AFTER MOVING A SONG
+            case GlobalStoreActionType.MOVE_SONG: {
+                return setStore({
+                    idNamePairs: store.idNamePairs,
+                    currentList: payload,
+                    newListCounter: store.newListCounter,
+                    listNameActive: store.listNameActive,
+                    deleteListModalIsActive: store.deleteListModalIsActive,
+                    markedList: store.markedList
+                });
+            }
             default:
                 return store;
         }
@@ -203,6 +216,30 @@ export const useGlobalStore = () => {
         }
 
         asyncMarkList(playlistId);
+    }
+
+    // MOVE A SONG IN A PLAYLIST
+    store.moveSong = function(sourceIndex, targetIndex) {
+        async function asyncMoveSong(sourceIndex, targetIndex) {
+            let payload = store.currentList.songs;
+            let tempSong = payload[sourceIndex];
+            payload[sourceIndex] = payload[targetIndex];
+            payload[targetIndex] = tempSong;
+
+            await api.putListOrder(store.currentList._id, payload);
+
+            let newList = store.currentList;
+            newList.songs = payload;
+
+            storeReducer({
+                type: GlobalStoreActionType.MOVE_SONG,
+                payload: newList
+            });
+
+            console.log(store.currentList.songs);
+        }
+
+        asyncMoveSong(sourceIndex, targetIndex);
     }
 
     // DELETE A PLAYLIST

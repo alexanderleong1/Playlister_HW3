@@ -122,6 +122,14 @@ createSong = async (req, res) => {
         return res.status(200).json({success: true, msg: "Successfully added a new song"});
     }).catch(err => res.status(400).json({ success: false, err: err }))
 }
+updateListOrder = async (req, res) => {
+    const newListOrder = req.body.newList;
+
+    await Playlist.updateOne({_id : req.params.id}, {songs: newListOrder})
+        .catch(err => res.status(400).json({success: false, err: "Could not update the playlist ordering"}))
+
+    return res.status(200).json({success: true, msg: "Successfully updated playlist ordering"});
+}
 
 module.exports = {
     createPlaylist,
@@ -129,5 +137,6 @@ module.exports = {
     getPlaylistPairs,
     getPlaylistById,
     deletePlaylist,
-    createSong
+    createSong,
+    updateListOrder
 }
