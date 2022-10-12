@@ -35,7 +35,7 @@ function SongCard(props) {
             onDragStart={handleDragStart}
             onDragEnter={handleDragEnter}
             onDragOver={handleDragOver}
-            onDragEnd={handleDrop}
+            // onDragEnd={handleDrop}
             onDrop={handleDrop}
             draggable="true"
         >
