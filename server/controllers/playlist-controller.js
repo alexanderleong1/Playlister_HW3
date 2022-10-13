@@ -130,6 +130,21 @@ updateListOrder = async (req, res) => {
 
     return res.status(200).json({success: true, msg: "Successfully updated playlist ordering"});
 }
+editSong = async (req, res) => {
+    const newSongTitle = req.body.newSong.title;
+    const newSongArtist = req.body.newSong.artist;
+    const newSongYouTubeId = req.body.newSong.youTubeId;
+
+    await Playlist.updateOne({"songs._id" : req.params.id}, {
+        $set: {
+            "songs.$.title": newSongTitle,
+            "songs.$.artist": newSongArtist,
+            "songs.$.youTubeId": newSongYouTubeId
+        }
+    }).catch(err => {console.log("err")});
+
+    return res.status(200).json({success: true});
+}
 
 module.exports = {
     createPlaylist,
@@ -138,5 +153,6 @@ module.exports = {
     getPlaylistById,
     deletePlaylist,
     createSong,
-    updateListOrder
+    updateListOrder,
+    editSong
 }

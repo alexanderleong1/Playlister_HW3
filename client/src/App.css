@@ -220,6 +220,7 @@ input {
   cursor: pointer;
   width: 20%;
   margin: 8px;
+  font-size:24px;
 }
 
 .dialog-header {
@@ -232,6 +233,44 @@ input {
 
 #confirm-cancel-container {
   text-align:center;
+}
+
+.dialog-center {
+  display: grid;
+  grid-template-columns: 30% 65%;
+  grid-template-rows: 33% 33% 33%;
+  gap: 10px 20px;
+  font-size: 20pt;
+}
+
+#title-prompt {
+  grid-column: 1/2;
+  grid-row: 1/2;
+}
+
+#artist-prompt {
+  grid-column: 1/2;
+  grid-row: 2/3;
+}
+
+#youTube-id-prompt {
+  grid-column: 1/2;
+  grid-row: 3/4;
+}
+
+#title-textfield {
+  grid-column: 2/3;
+  grid-row: 1/2;
+}
+
+#artist-textfield {
+  grid-column: 2/3;
+  grid-row: 2/3;
+}
+
+#youTube-id-textfield {
+  grid-column: 2/3;
+  grid-row: 3/4;
 }
 
 /* ANIMATIONS

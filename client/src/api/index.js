@@ -40,6 +40,11 @@ export const putListOrder = (id, newList) => api.put(`/updatelistorder/${id}`,
     {
         newList: newList
     })
+export const putEditSong = (id, newSong) => api.put(`/editsong/${id}`,
+    {
+        newSong: newSong
+    }
+)
 const apis = {
     getAllPlaylists,
     getPlaylistPairs,
@@ -47,7 +52,8 @@ const apis = {
     postNewPlaylist,
     deletePlaylist,
     putNewSong,
-    putListOrder
+    putListOrder,
+    putEditSong
 }
 
 export default apis

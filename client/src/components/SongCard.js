@@ -26,6 +26,10 @@ function SongCard(props) {
     function handleDragOver(event) {
         event.preventDefault();
     }
+    function markSongForEdit(songIndex) {
+        // MARK THE SONG USING THE SONG INDEX
+        store.markSongForEdit(songIndex);
+    }
     let cardClass = "list-card unselected-list-card";
     return (
         <div
@@ -37,6 +41,18 @@ function SongCard(props) {
             onDragOver={handleDragOver}
             // onDragEnd={handleDrop}
             onDrop={handleDrop}
+            onDoubleClick={() => {
+                // MARK THE CURRENT SONG FOR EDITING
+                store.markSongForEdit(index);
+
+                // AND THEN SET THE FIELDS OF THE INPUT FORM
+                document.getElementById("title-textfield").value=(store.markedSong ? store.markedSong.title : '');
+                document.getElementById("artist-textfield").value=(store.markedSong ? store.markedSong.artist : '');
+                document.getElementById("youTube-id-textfield").value=(store.markedSong ? store.markedSong.youTubeId : '');
+
+                // AND THEN OPEN MODAL
+                store.showEditModal();
+            }}
             draggable="true"
         >
             {index + 1}.
