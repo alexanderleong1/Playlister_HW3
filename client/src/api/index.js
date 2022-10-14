@@ -45,6 +45,7 @@ export const putEditSong = (id, newSong) => api.put(`/editsong/${id}`,
         newSong: newSong
     }
 )
+export const deleteSong = (id, songId) => api.delete(`/deletesong/${id}/${songId}`);
 const apis = {
     getAllPlaylists,
     getPlaylistPairs,
@@ -53,7 +54,8 @@ const apis = {
     deletePlaylist,
     putNewSong,
     putListOrder,
-    putEditSong
+    putEditSong,
+    deleteSong
 }
 
 export default apis

@@ -145,6 +145,22 @@ editSong = async (req, res) => {
 
     return res.status(200).json({success: true});
 }
+deleteSong = async (req, res) => {
+    Playlist.findOne({_id:req.params.id}, (err, list) => {
+        // console.log(list);
+    })
+
+    await Playlist.updateOne({_id : req.params.id}, {
+        $pull: {
+            "songs": {_id: req.params.songId}
+        }
+    }, (err, resp) => {
+        console.log(resp);
+        if (err) return res.status(400).json({success: false})
+    }).catch(err => console.log(err));
+
+    return res.status(200).json({success: true, msg: `Successfully deleted ${req.params.songId}`});
+}
 
 module.exports = {
     createPlaylist,
@@ -154,5 +170,6 @@ module.exports = {
     deletePlaylist,
     createSong,
     updateListOrder,
-    editSong
+    editSong,
+    deleteSong
 }

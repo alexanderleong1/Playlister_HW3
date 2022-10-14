@@ -30,6 +30,9 @@ function SongCard(props) {
         // MARK THE SONG USING THE SONG INDEX
         store.markSongForEdit(songIndex);
     }
+    function showDeleteSongModal(songIndex) {
+        store.showDeleteSongModal(songIndex);
+    }
     let cardClass = "list-card unselected-list-card";
     return (
         <div
@@ -67,6 +70,15 @@ function SongCard(props) {
                 id={"remove-song-" + index}
                 className="list-card-button"
                 value={"\u2715"}
+                onClick={(event) => {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    showDeleteSongModal(index);
+                }}
+                onDoubleClick={(event) => {
+                    event.stopPropagation();
+                    event.preventDefault();
+                }}
             />
         </div>
     );
