@@ -278,6 +278,19 @@ export const useGlobalStore = () => {
     // DRIVE THE STATE OF THE APPLICATION. WE'LL CALL THESE IN 
     // RESPONSE TO EVENTS INSIDE OUR COMPONENTS.
 
+    store.setIsListNameEditActive = function(id) {
+        async function asyncSetListNameActive(id) {
+            let list = await api.getPlaylistById(id);
+
+            storeReducer({
+                type: GlobalStoreActionType.SET_LIST_NAME_EDIT_ACTIVE,
+                payload: list
+            });
+        }
+
+        asyncSetListNameActive(id);
+    }
+
     store.addSong = function () {
         async function asyncAddSong() {
             let response = await api.putNewSong(store.currentList._id);
@@ -462,10 +475,10 @@ export const useGlobalStore = () => {
         async function asyncChangeListName(id) {
             let response = await api.getPlaylistById(id);
             if (response.data.success) {
-                let playlist = response.data.playists;
+                let playlist = response.data.playlist;
                 playlist.name = newName;
                 async function updateList(playlist) {
-                    response = await api.updatePlaylistById(playlist._id, playlist);
+                    response = await api.updatePlaylistName(playlist._id, newName);
                     if (response.data.success) {
                         async function getListPairs(playlist) {
                             response = await api.getPlaylistPairs();

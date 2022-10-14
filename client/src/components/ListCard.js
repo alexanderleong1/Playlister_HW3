@@ -28,15 +28,10 @@ function ListCard(props) {
         }
     }
 
-    function handleToggleEdit(event) {
-        event.stopPropagation();
-        toggleEdit();
-    }
-
-    function toggleEdit() {
+    function toggleEdit(id) {
         let newActive = !editActive;
         if (newActive) {
-            store.setIsListNameEditActive();
+            store.setIsListNameEditActive(id);
         }
         setEditActive(newActive);
     }
@@ -98,7 +93,10 @@ function ListCard(props) {
                 type="button"
                 id={"edit-list-" + idNamePair._id}
                 className="list-card-button"
-                onClick={handleToggleEdit}
+                onClick={(event) => {
+                    event.stopPropagation();
+                    toggleEdit(idNamePair._id);
+                }}
                 value={"\u270E"}
             />
         </div>;
