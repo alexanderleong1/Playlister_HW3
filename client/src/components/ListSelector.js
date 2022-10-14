@@ -30,16 +30,17 @@ const ListSelector = () => {
     }
     return (
         <div id="playlist-selector">
-            <div id="list-selector-list">
             <div id="playlist-selector-heading">
+                <div>Your Lists</div>
                 <input
                     type="button"
                     id="add-list-button"
                     onClick={handleCreateNewList}
                     className="playlister-button"
                     value="+" />
-                Your Lists
-            </div>                {
+            </div>                
+            <div id="list-selector-list">
+                {
                     listCard
                 }
             </div>
