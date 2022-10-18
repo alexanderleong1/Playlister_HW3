@@ -8,7 +8,9 @@ function EditSongModal(props) {
     const [youTubeId, setYouTubeId] = useState(store.markedSong ? store.markedSong.youTubeId : '');
     
     function confirmEditList() {
-        store.editSong(title, artist, youTubeId);
+        store.editSong(document.getElementById('title-textfield').value, 
+            document.getElementById('artist-textfield').value, 
+            document.getElementById('youTube-id-textfield').value);
     }
 
     function handleTitleUpdate(event) {
