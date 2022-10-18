@@ -35,17 +35,19 @@ function EditToolbar() {
             <input
                 type="button"
                 id='add-song-button'
+                className="edit-button"
                 disabled={editStatus}
                 value="+"
-                className={enabledButtonClass}
+                className={enabledButtonClass  + " edit-button"}
                 onClick={handleAddSong}
             />
             <input
                 type="button"
                 id='undo-button'
+                className="edit-button"
                 disabled={editStatus}
                 value="⟲"
-                className={enabledButtonClass}
+                className={enabledButtonClass + " edit-button"}
                 onClick={handleUndo}
             />
             <input
@@ -53,15 +55,16 @@ function EditToolbar() {
                 id='redo-button'
                 disabled={editStatus}
                 value="⟳"
-                className={enabledButtonClass}
+                className={enabledButtonClass + " edit-button"}
                 onClick={handleRedo}
             />
             <input
                 type="button"
                 id='close-button'
+                className="edit-button"
                 disabled={editStatus}
                 value="&#x2715;"
-                className={enabledButtonClass}
+                className={enabledButtonClass + " edit-button"}
                 onClick={handleClose}
             />
         </span>);

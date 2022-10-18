@@ -234,6 +234,11 @@ input {
   float:right;
 }
 
+.edit-button {
+  max-height: 56px;
+  height: 56px;
+}
+
 #confirm-cancel-container {
   text-align:center;
 }
