@@ -64,6 +64,7 @@ body {
 
 #playlist-selector, #playlist-cards {
   overflow: scroll;
+  max-height:80%;
   grid-column: 1 / 3;
   grid-row: 2 / 3;
   display:grid;
@@ -103,8 +104,9 @@ body {
 }
 
 #add-list-button {
-  float:left;
+  float:center;
   font-size: 24pt;
+  margin-left:32px;
 }
 
 .list-card, .selected-list-card, .unselected-list-card {
@@ -244,14 +246,18 @@ input {
   font-size: 20pt;
 }
 
+#your-lists {
+  float:left;
+}
+
 #playlist-selector-heading {
   display: grid;
   grid-template-rows: 100%;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 25% 75%;
   /* gap: 5px 5px; */
   font-size: 24pt;
   width: 35%;
-  margin-left: 15px;
+  /* margin-left: 15px; */
   float: center;
   justify-items: left;
 }

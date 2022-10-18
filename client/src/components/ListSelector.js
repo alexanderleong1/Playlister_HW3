@@ -31,20 +31,21 @@ const ListSelector = () => {
     return (
         <div id="playlist-selector">
             <div id="playlist-selector-heading">
-                <div>Your Lists</div>
                 <input
                     type="button"
                     id="add-list-button"
                     onClick={handleCreateNewList}
                     className="playlister-button"
                     value="+" />
+                <div id="your-lists">Your Lists</div>
             </div>                
             <div id="list-selector-list">
                 {
                     listCard
                 }
             </div>
-        </div>)
+        </div>
+    )
 }
 
 export default ListSelector;
