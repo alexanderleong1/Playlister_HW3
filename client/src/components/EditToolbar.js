@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import { GlobalStoreContext } from '../store'
 import { useHistory } from 'react-router-dom'
+import AddSong_Transaction from '../transactions/AddSong_Transaction';
 /*
     This toolbar is a functional React component that
     manages the undo/redo/close buttons.
@@ -24,7 +25,13 @@ function EditToolbar() {
         store.closeCurrentList();
     }
     function handleAddSong() {
-        store.addSong();
+        let transaction = new AddSong_Transaction(store, {
+            title: "Untitled",
+            artist: "Unknown",
+            youTubeId: 'dQw4w9WgXcQ'
+        });
+        store.addSongTransaction(transaction);
+        // store.addSong();
     }
     let editStatus = false;
     if (store.isListNameEditActive) {
@@ -35,7 +42,6 @@ function EditToolbar() {
             <input
                 type="button"
                 id='add-song-button'
-                className="edit-button"
                 disabled={editStatus}
                 value="+"
                 className={enabledButtonClass  + " edit-button"}
@@ -44,7 +50,6 @@ function EditToolbar() {
             <input
                 type="button"
                 id='undo-button'
-                className="edit-button"
                 disabled={editStatus}
                 value="⟲"
                 className={enabledButtonClass + " edit-button"}
@@ -61,7 +66,6 @@ function EditToolbar() {
             <input
                 type="button"
                 id='close-button'
-                className="edit-button"
                 disabled={editStatus}
                 value="&#x2715;"
                 className={enabledButtonClass + " edit-button"}

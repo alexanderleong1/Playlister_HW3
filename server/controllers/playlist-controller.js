@@ -109,12 +109,7 @@ deletePlaylist = async (req, res) => {
 }
 createSong = async (req, res) => {
     const body = req.body;
-
-    const song = {
-        title: body.title,
-        artist: body.artist,
-        youTubeId: body.youTubeId
-    }
+    const song = body;
 
     await Playlist.findOne({_id : req.params.id }, (err, list) => {
         if (err) {
@@ -164,10 +159,9 @@ deleteSong = async (req, res) => {
         }
     }, (err, resp) => {
         console.log(resp);
-        if (err) return res.status(400).json({success: false})
+        if (err) return res.status(400).json({success: false});
+        return res.status(200).json({success: true, msg: `Successfully deleted ${req.params.songId}`});
     }).catch(err => console.log(err));
-
-    return res.status(200).json({success: true, msg: `Successfully deleted ${req.params.songId}`});
 }
 
 module.exports = {

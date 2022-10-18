@@ -293,7 +293,12 @@ export const useGlobalStore = () => {
 
     store.addSong = function () {
         async function asyncAddSong() {
-            let response = await api.putNewSong(store.currentList._id);
+            let response = await api.putNewSong(store.currentList._id,
+                {
+                    title: "Untitled",
+                    artist: "Unknown",
+                    youTubeId: 'dQw4w9WgXcQ'
+                });
 
             if (response.data.success) {
                 store.setCurrentList(store.currentList._id);
@@ -504,6 +509,9 @@ export const useGlobalStore = () => {
 
     // THIS FUNCTION PROCESSES CLOSING THE CURRENTLY LOADED LIST
     store.closeCurrentList = function () {
+        // CLEAR THE TPS
+        tps.clearAllTransactions();
+
         storeReducer({
             type: GlobalStoreActionType.CLOSE_CURRENT_LIST,
             payload: {}
@@ -572,6 +580,29 @@ export const useGlobalStore = () => {
             type: GlobalStoreActionType.SET_LIST_NAME_EDIT_ACTIVE,
             payload: null
         });
+    }
+
+    // FOR TRANSACTIONS
+    // ----------------------------------
+    store.addSongTransaction = function(transaction) {
+        // ADD THE TRANSACTION
+        tps.addTransaction(transaction);
+    }
+    store.removeSongWithId = function(song) {
+        store.markedSong = song;
+
+        store.confirmDeleteSong();
+    }
+    store.addSongWithRef = function(song) {
+        async function asyncAddSong(song) {
+            let response = await api.putNewSong(store.currentList._id, song);
+
+            if (response.data.success) {
+                store.setCurrentList(store.currentList._id);
+            }
+        }
+
+        asyncAddSong(song);
     }
 
     // THIS GIVES OUR STORE AND ITS REDUCER TO ANY COMPONENT THAT NEEDS IT
