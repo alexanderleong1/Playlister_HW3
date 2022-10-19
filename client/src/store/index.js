@@ -593,16 +593,20 @@ export const useGlobalStore = () => {
 
         store.confirmDeleteSong();
     }
-    store.addSongWithRef = function(song) {
+    store.addSongWithRef = async function(song) {
         async function asyncAddSong(song) {
             let response = await api.putNewSong(store.currentList._id, song);
+            let newList = await api.getPlaylistById(store.currentList._id);
+            newList = newList.data.playlist.songs;
 
             if (response.data.success) {
-                store.setCurrentList(store.currentList._id);
+                await store.setCurrentList(store.currentList._id);
+                console.log(newList);
+                return newList[newList.length - 1]._id;
             }
         }
 
-        asyncAddSong(song);
+        return await asyncAddSong(song);
     }
     store.addSongWithIndex = function(song, index) {
         async function asyncAddSong(song) {

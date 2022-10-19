@@ -14,12 +14,12 @@ export default class AddSong_Transaction extends jsTPS_Transaction {
         this.song = song;
     }
 
-    doTransaction() {
+    async doTransaction() {
         // this.app.addSong(this.song);
-        this.store.addSongWithRef(this.song);
+        this.song._id = await this.store.addSongWithRef(this.song);
 
         // STORE THE SONG ID
-        this.song._id = this.store.currentList.songs[this.store.currentList.songs.length - 1] ? this.store.currentList.songs[this.store.currentList.songs.length - 1]._id : '';
+        //  = this.store.currentList.songs[this.store.currentList.songs.length - 1] ? this.store.currentList.songs[this.store.currentList.songs.length - 1]._id : '';
     }
     
     undoTransaction() {
