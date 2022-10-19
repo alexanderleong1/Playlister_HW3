@@ -33,7 +33,7 @@ const ListSelector = () => {
             <div id="playlist-selector-heading">
                 <input
                     type="button"
-                    id="add-list-button"
+                    id={(store.listNameActive || store.editSongModalIsActive || store.deleteSongModalIsActive || store.deleteListModalIsActive) ? "add-list-button-disabled" : "add-list-button"}
                     onClick={handleCreateNewList}
                     className="playlister-button"
                     value="+" />

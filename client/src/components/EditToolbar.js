@@ -12,7 +12,7 @@ function EditToolbar() {
     const { store } = useContext(GlobalStoreContext);
     const history = useHistory();
 
-    let enabledButtonClass = "playlister-button";
+    let enabledButtonClass = (store.listNameActive || store.editSongModalIsActive || store.deleteSongModalIsActive || store.deleteListModalIsActive) ? "playlister-button-disabled" : "playlister-button";
 
     function handleUndo() {
         store.undo();
@@ -34,7 +34,7 @@ function EditToolbar() {
         // store.addSong();
     }
     let editStatus = false;
-    if (store.isListNameEditActive) {
+    if (store.listNameActive) {
         editStatus = true;
     }
     return (
@@ -42,7 +42,7 @@ function EditToolbar() {
             <input
                 type="button"
                 id='add-song-button'
-                disabled={editStatus}
+                disabled={!store.currentList || editStatus}
                 value="+"
                 className={enabledButtonClass  + " edit-button"}
                 onClick={handleAddSong}
@@ -50,7 +50,7 @@ function EditToolbar() {
             <input
                 type="button"
                 id='undo-button'
-                disabled={editStatus}
+                disabled={(!store.currentList || !store.tps.hasTransactionToUndo()) || editStatus}
                 value="⟲"
                 className={enabledButtonClass + " edit-button"}
                 onClick={handleUndo}
@@ -58,7 +58,7 @@ function EditToolbar() {
             <input
                 type="button"
                 id='redo-button'
-                disabled={editStatus}
+                disabled={(!store.currentList || !store.tps.hasTransactionToRedo()) || editStatus}
                 value="⟳"
                 className={enabledButtonClass + " edit-button"}
                 onClick={handleRedo}
@@ -66,7 +66,7 @@ function EditToolbar() {
             <input
                 type="button"
                 id='close-button'
-                disabled={editStatus}
+                disabled={!store.currentList}
                 value="&#x2715;"
                 className={enabledButtonClass + " edit-button"}
                 onClick={handleClose}

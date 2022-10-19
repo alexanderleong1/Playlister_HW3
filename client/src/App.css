@@ -109,6 +109,14 @@ body {
   margin-left:32px;
 }
 
+#add-list-button-disabled {
+  float:center;
+  font-size: 24pt;
+  margin-left:32px;
+  opacity: 0.25; 
+  cursor: not-allowed;
+}
+
 .list-card, .selected-list-card, .unselected-list-card {
   font-size: 18pt;
   margin: 10px;
