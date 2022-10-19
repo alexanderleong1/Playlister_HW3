@@ -1,4 +1,6 @@
 import jsTPS_Transaction from "../common/jsTPS.js"
+import api from '../api'
+
 /**
  * AddSong_Transaction
  * 
@@ -20,10 +22,22 @@ export default class DeleteSong_Transaction extends jsTPS_Transaction {
         this.store.removeSongWithId(this.song);
     }
     
-    undoTransaction() {  
+    async undoTransaction() {  
         // this.app.addSong(this.song);
         // this.store.addSongWithRef(this.song);
-        this.store.addSongWithIndex(this.song, this.index)
+        const newSong = {
+            title: this.song.title,
+            artist: this.song.artist,
+            youTubeId: this.song.youTubeId
+        }
+
+        await this.store.addSongWithIndex(newSong, this.index);
+
+        let res = await api.getPlaylistById(this.store.currentList._id);
+        // ONCE WE ADD THE NEW SONG WE NEED TO GET THE NEW SONG ID
+        this.song = res.data.playlist.songs[this.index];
+        console.log(res.data.playlist.songs);
+        console.log("song", this.song, this.index);
 
         // STORE THE SONG ID
         // this.song._id = this.store.currentList.songs[this.store.currentList.songs.length - 1]._id;

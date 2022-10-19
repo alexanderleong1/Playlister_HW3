@@ -644,35 +644,57 @@ export const useGlobalStore = () => {
 
         return await asyncAddSong(song);
     }
-    store.addSongWithIndex = function(song, index) {
+    store.addSongWithIndex = async function(song, index) {
         async function asyncAddSong(song) {
             let response = await api.putNewSong(store.currentList._id, song);
 
             if (response.data.success) {
-                async function asyncMoveSong(targetIndex) {
-                    let payload = store.currentList.songs;
-                    payload.splice(store.currentList.songs.length - 1, 1);
+                store.setCurrentList(store.currentList._id);
 
-                    payload.splice(targetIndex, 0, song);
-        
-                    await api.putListOrder(store.currentList._id, payload);
-        
-                    let newList = store.currentList;
-                    newList.songs = payload;
-        
-                    storeReducer({
-                        type: GlobalStoreActionType.MOVE_SONG,
-                        payload: newList
-                    });
+                let newList = await api.getPlaylistById(store.currentList._id);
+                let payload = newList.data.playlist.songs;
+                let movedSong = payload.splice(store.currentList.songs.length - 1, 1)[0];
+                payload.splice(index, 0, movedSong);
 
-                    store.setCurrentList(store.currentList._id);
-                }
+                await api.putListOrder(store.currentList._id, payload);
+
+                let q = store.currentList;
+                q.songs = payload;
+    
+                storeReducer({
+                    type: GlobalStoreActionType.MOVE_SONG,
+                    payload: q
+                });
+
+                store.setCurrentList(store.currentList._id);
+
+                // async function asyncMoveSong(sourceIndex, targetIndex) {
+                //     let payload = store.currentList.songs;
+                //     let movedSong = payload.splice(sourceIndex, 1)[0];
+                //     payload.splice(targetIndex, 0, movedSong);
         
-                await asyncMoveSong(index);
+                //     await api.putListOrder(store.currentList._id, payload);
+        
+                //     let newList = store.currentList;
+                //     newList.songs = payload;
+        
+                //     storeReducer({
+                //         type: GlobalStoreActionType.MOVE_SONG,
+                //         payload: newList
+                //     });
+
+                //     store.setCurrentList(store.currentList._id);
+                // }
+                
+                // await asyncMoveSong(store.currentList.songs.length - 1, index);
             }
+            store.setCurrentList(store.currentList._id);
         }
 
-        asyncAddSong(song);
+        await asyncAddSong(song);
+
+        store.setCurrentList(store.currentList._id);
+
     }
     store.deleteSongTransaction = function(transaction) {
         // ADD THE TRANSACTION
