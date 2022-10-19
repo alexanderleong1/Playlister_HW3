@@ -1,11 +1,22 @@
 import { useContext, useState } from 'react'
 import { GlobalStoreContext } from '../store'
+import DeleteSong_Transaction from '../transactions/DeleteSong_Transaction';
 
 function DeleteSongModal(props) {
     const { store } = useContext(GlobalStoreContext);
 
     function confirmDeleteSong() {
-        store.confirmDeleteSong();
+        // FIND THE INDEX
+        let songIndex = 0;
+        for (let i = 0; i < store.currentList.songs.length; i++) {
+            if (store.currentList.songs[i] == store.markedSong) {
+                songIndex = i;
+                break;
+            }
+        }
+        let transaction = new DeleteSong_Transaction(store, store.markedSong, songIndex);
+        store.deleteSongTransaction(transaction);
+        // store.confirmDeleteSong();
     }
 
     function findPlaylistName() {

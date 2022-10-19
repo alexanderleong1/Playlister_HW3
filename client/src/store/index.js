@@ -604,6 +604,40 @@ export const useGlobalStore = () => {
 
         asyncAddSong(song);
     }
+    store.addSongWithIndex = function(song, index) {
+        async function asyncAddSong(song) {
+            let response = await api.putNewSong(store.currentList._id, song);
+
+            if (response.data.success) {
+                async function asyncMoveSong(targetIndex) {
+                    let payload = store.currentList.songs;
+                    payload.splice(store.currentList.songs.length - 1, 1);
+
+                    payload.splice(targetIndex, 0, song);
+        
+                    await api.putListOrder(store.currentList._id, payload);
+        
+                    let newList = store.currentList;
+                    newList.songs = payload;
+        
+                    storeReducer({
+                        type: GlobalStoreActionType.MOVE_SONG,
+                        payload: newList
+                    });
+
+                    store.setCurrentList(store.currentList._id);
+                }
+        
+                await asyncMoveSong(index);
+            }
+        }
+
+        asyncAddSong(song);
+    }
+    store.deleteSongTransaction = function(transaction) {
+        // ADD THE TRANSACTION
+        tps.addTransaction(transaction);
+    }
 
     // THIS GIVES OUR STORE AND ITS REDUCER TO ANY COMPONENT THAT NEEDS IT
     return { store, storeReducer };

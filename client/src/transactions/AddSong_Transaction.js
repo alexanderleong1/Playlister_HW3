@@ -19,7 +19,7 @@ export default class AddSong_Transaction extends jsTPS_Transaction {
         this.store.addSongWithRef(this.song);
 
         // STORE THE SONG ID
-        this.song._id = this.store.currentList.songs[this.store.currentList.songs.length - 1]._id;
+        this.song._id = this.store.currentList.songs[this.store.currentList.songs.length - 1] ? this.store.currentList.songs[this.store.currentList.songs.length - 1]._id : '';
     }
     
     undoTransaction() {
