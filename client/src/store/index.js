@@ -431,9 +431,9 @@ export const useGlobalStore = () => {
     store.moveSong = function(sourceIndex, targetIndex) {
         async function asyncMoveSong(sourceIndex, targetIndex) {
             let payload = store.currentList.songs;
-            let tempSong = payload[sourceIndex];
-            payload[sourceIndex] = payload[targetIndex];
-            payload[targetIndex] = tempSong;
+            let movedSong = payload.splice(sourceIndex, 1)[0];
+            payload.splice(targetIndex, 0, movedSong);
+            console.log(payload);
 
             await api.putListOrder(store.currentList._id, payload);
 
