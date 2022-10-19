@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { GlobalStoreContext } from '../store'
+import MoveSong_Transaction from '../transactions/MoveSong_Transaction';
 
 function SongCard(props) {
     const { store } = useContext(GlobalStoreContext);
@@ -21,7 +22,9 @@ function SongCard(props) {
         let sourceIndex = Number(event.dataTransfer.getData("song"));
 
         // UPDATE THE MODEL 
-        store.moveSong(sourceIndex, targetIndex);
+        // store.moveSong(sourceIndex, targetIndex);
+        let transaction = new MoveSong_Transaction(store, sourceIndex, targetIndex);
+        store.moveSongTransaction(transaction);
     }
     function handleDragOver(event) {
         event.preventDefault();

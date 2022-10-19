@@ -601,7 +601,6 @@ export const useGlobalStore = () => {
 
             if (response.data.success) {
                 await store.setCurrentList(store.currentList._id);
-                console.log(newList);
                 return newList[newList.length - 1]._id;
             }
         }
@@ -640,6 +639,9 @@ export const useGlobalStore = () => {
     }
     store.deleteSongTransaction = function(transaction) {
         // ADD THE TRANSACTION
+        tps.addTransaction(transaction);
+    }
+    store.moveSongTransaction = function(transaction) {
         tps.addTransaction(transaction);
     }
 
