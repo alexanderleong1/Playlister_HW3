@@ -423,8 +423,29 @@ export const useGlobalStore = () => {
         }
 
         asyncEditSong(newTitle, newArtist, newYouTubeId);
+    }
 
+    store.editSongWithRef = function(song, newTitle, newArtist, newYouTubeId) {
+        // TODO
+        async function asyncEditSong(newTitle, newArtist, newYouTubeId) {
+            store.markedSong = song;
+            await api.putEditSong(store.markedSong._id, {
+            title: newTitle,
+            artist: newArtist,
+            youTubeId: newYouTubeId
+        });
 
+        // STORE THE CHANGES FOR THE SONG AND HIDE MODAL
+        storeReducer({
+            type: GlobalStoreActionType.EDIT_SONG,
+            payload: {}
+        });
+
+        // REFRESH THE CURRENT LIST
+        store.setCurrentList(store.currentList._id);
+        }
+
+        asyncEditSong(newTitle, newArtist, newYouTubeId);
     }
 
     // MOVE A SONG IN A PLAYLIST
@@ -641,6 +662,9 @@ export const useGlobalStore = () => {
         tps.addTransaction(transaction);
     }
     store.moveSongTransaction = function(transaction) {
+        tps.addTransaction(transaction);
+    }
+    store.editSongTransaction = function(transaction) {
         tps.addTransaction(transaction);
     }
 

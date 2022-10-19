@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from 'react'
 import { GlobalStoreContext } from '../store'
+import EditSong_Transaction from '../transactions/EditSong_Transaction';
 
 function EditSongModal(props) {
     const { store } = useContext(GlobalStoreContext);
@@ -8,9 +9,22 @@ function EditSongModal(props) {
     const [youTubeId, setYouTubeId] = useState(store.markedSong ? store.markedSong.youTubeId : '');
     
     function confirmEditList() {
-        store.editSong(document.getElementById('title-textfield').value, 
-            document.getElementById('artist-textfield').value, 
-            document.getElementById('youTube-id-textfield').value);
+        // store.editSong(document.getElementById('title-textfield').value, 
+        //     document.getElementById('artist-textfield').value, 
+        //     document.getElementById('youTube-id-textfield').value);
+
+        let transaction = new EditSong_Transaction(store, store.markedSong, {
+            title: store.markedSong.title,
+            artist: store.markedSong.artist,
+            youTubeId: store.markedSong.youTubeId
+        },
+        {
+            title: document.getElementById('title-textfield').value, 
+            artist: document.getElementById('artist-textfield').value, 
+            youTubeId: document.getElementById('youTube-id-textfield').value
+        });
+
+        store.editSongTransaction(transaction);
     }
 
     function handleTitleUpdate(event) {
